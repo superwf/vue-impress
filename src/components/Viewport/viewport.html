@@ -1,0 +1,8 @@
+<div ref="root" class="impress-viewport" :style="initialRootStyle">
+  <div v-if="!impressSupported">your browser does not support this component</div>
+  <div class="impress-canvas" :style="initialCanvasStyle" v-else>
+    <template v-for="step of steps">
+      <step :step="step" />
+    </template>
+  </div>
+</div>

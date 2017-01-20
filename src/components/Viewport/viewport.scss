@@ -1,0 +1,15 @@
+.impress-viewport {
+  height: 100%;
+  width: 100%;
+  // overflow: hidden;
+  transform-origin: left top 0px;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+.impress-viewport, .impress-canvas {
+  position: absolute;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
