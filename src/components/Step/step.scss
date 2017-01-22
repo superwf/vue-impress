@@ -1,5 +1,5 @@
-.step {
+.impress-step {
   position: absolute;
   transition: transform 1s;
-  border: 1px solid;
+  transform-style: preserve-3d;
 }

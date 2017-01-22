@@ -1,0 +1,5 @@
+.impress-viewport(ref="root", ":style"="initialRootStyle")
+  div(v-if="!impressSupported") your browser does not support this component
+  .impress-canvas(:style="canvasStyle" v-else="true")
+    template(v-for="(step, i) in stepsData")
+      step(:step="step", :click="gotoStep", :index="i")

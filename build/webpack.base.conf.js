@@ -63,6 +63,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.pug/,
+        loader: 'pug',
+      },
+      {
         test: /\.json$/,
         loader: 'json'
       },

@@ -1,12 +1,20 @@
 import Step from '../Step'
 import * as utils from '../../utils'
+import initStepData from '../../utils/initStepData'
+import reverseData from '../../utils/reverseData'
 
 export default {
   props: {
+    /* 各动画的位置参数 */
     steps: {
       type: Array,
       required: true,
     },
+
+    /* 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
+     * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，这样其他实例也没有意义 */
+    fullscreen: Boolean,
+
   },
 
   components: {
@@ -20,29 +28,30 @@ export default {
       } else {
         this.stepIndex += 1
       }
-      const currentStep = this.steps[this.stepIndex]
-      const target = {
-        rotate: {
-          // x: -currentStep.rotate.x,
-          // y: -currentStep.rotate.y,
-          // z: -currentStep.rotate.z,
-        },
-        translate: {
-          x: -currentStep.x,
-          y: -currentStep.y,
-          z: -currentStep.z,
-          // x: -currentStep.translate.x,
-          // y: -currentStep.translate.y,
-          // z: -currentStep.translate.z,
-        },
-        scale: currentStep.scale ? 1 / currentStep.scale : 1,
+      this.gotoStep(this.stepIndex)
+    },
+    prevStep() {
+      if (this.stepIndex <= 0) {
+        this.stepIndex = this.steps.length - 1
+      } else {
+        this.stepIndex -= 1
       }
-      console.log(target);
+      this.gotoStep(this.stepIndex)
+    },
+
+    gotoStep(stepIndex) {
+      // console.log(stepIndex);
+      // console.log(this.stepIndex);
+      // if (stepIndex === this.stepIndex) {
+      //   return
+      // }
+      const currentData = this.stepsData[stepIndex]
+      const target = reverseData(currentData)
       this.initialRootStyle = {
         perspective: '1000px',
         transform: utils.scale(target.scale),
       }
-      this.initialCanvasStyle = {
+      this.canvasStyle = {
         transform: utils.rotate(target.rotate, true) + utils.translate(target.translate),
       }
     },
@@ -50,44 +59,25 @@ export default {
 
   beforeMount() {
     this.impressSupported = utils.impressSupported
-    const currentStep = this.steps[0]
-    const target = {
-      rotate: {
-        // x: -currentStep.rotate.x,
-        // y: -currentStep.rotate.y,
-        // z: -currentStep.rotate.z,
-      },
-      translate: {
-        x: -currentStep.x,
-        y: -currentStep.y,
-        z: -currentStep.z,
-        // x: -currentStep.translate.x,
-        // y: -currentStep.translate.y,
-        // z: -currentStep.translate.z,
-      },
-      scale: 1 / currentStep.scale,
-    }
-    console.log(target);
-    this.initialRootStyle = {
-      perspective: '1000px',
-      transform: utils.scale(target.scale),
-    }
-    this.initialCanvasStyle = {
-      transform: utils.rotate(target.rotate, true) + utils.translate(target.translate),
-    }
+    this.stepsData = this.steps.map((data) => {
+      const stepData = initStepData(data)
+      stepData.content = data.content
+      return stepData
+    })
   },
 
   mounted() {
-    const parent = this.$refs.root.offsetParent
-    console.log(parent)
+    // const parent = this.$refs.root.offsetParent
+    this.gotoStep(0)
   },
 
   data() {
     return {
       impressSupported: true,
       initialRootStyle: '',
-      initialCanvasStyle: '',
-      stepIndex: 1,
+      canvasStyle: '',
+      stepIndex: null,
+      stepsData: [],
     }
   },
 }

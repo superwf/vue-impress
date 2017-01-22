@@ -1,4 +1,4 @@
-<template src="./step.html"></template>
+<template lang="pug" src="./step.pug"></template>
 
 <script src="./step.js"></script>
 

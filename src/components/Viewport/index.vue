@@ -1,4 +1,4 @@
-<template src="./viewport.html"></template>
+<template lang="pug" src="./viewport.pug"></template>
 
 <script src="./viewport.js"></script>
 
