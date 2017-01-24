@@ -1,94 +1,39 @@
 import expect from 'expect'
-import toNumber from '../../../src/utils/toNumber'
-import initStepData from '../../../src/utils/initStepData'
-import reverseData from '../../../src/utils/reverseData'
+import { translate, rotate, scale, impressSupported, transitionDuration } from '../../../src/utils'
 
 describe('test utils', () => {
-  it('toNumber', () => {
-    let n = toNumber('100')
-    expect(n).toBe(100)
-
-    n = toNumber('a', 10)
-    expect(n).toBe(10)
-
-    n = toNumber('a')
-    expect(n).toBe(0)
-
-    n = toNumber('a')
-    expect(n).toBe(0)
-
-    n = toNumber(Number.NaN, 11)
-    expect(n).toBe(11)
-
-    n = toNumber(12, 12)
-    expect(n).toBe(12)
+  it('translate', () => {
+    const t = {
+      x: 100,
+      y: 200,
+      z: 300,
+    }
+    expect(translate(t)).toEqual(` translate3d(${t.x}px, ${t.y}px, ${t.z}px)`)
   })
 
-  it('initStepData and reverseData', () => {
-    const data = {
-      x: 10,
-      y: 20,
-      rotateX: 30,
-      rotateY: 40,
+  it('rotate', () => {
+    const t = {
+      x: 100,
+      y: 200,
+      z: 300,
     }
-    const stepData = initStepData(data)
-    expect(stepData.translate).toEqual({
-      x: data.x,
-      y: data.y,
-      z: 0,
-    })
+    expect(rotate(t)).toEqual(' rotateX(100deg) rotateY(200deg) rotateZ(300deg)')
+    expect(rotate(t, true)).toEqual(' rotateZ(300deg) rotateY(200deg) rotateX(100deg)')
+  })
 
-    expect(stepData.rotate).toEqual({
-      x: data.rotateX,
-      y: data.rotateY,
-      z: 0,
-    })
-    expect(stepData.scale).toBe(1)
+  it('scale', () => {
+    const s = 6
+    expect(scale(s)).toBe(` scale(${s})`)
+  })
 
-    expect(reverseData(stepData)).toEqual({
-      translate: {
-        x: -10,
-        y: -20,
-        z: 0,
-      },
-      rotate: {
-        x: -30,
-        y: -40,
-        z: 0,
-      },
-      scale: 1,
-    })
+  /* in test env, phantomjs or chrome or firefox test env, it is sure to be true */
+  it('impressSupported', () => {
+    expect(impressSupported).toBe(true)
+  })
 
-    const data1 = {
-      z: 30,
-      rotate: 30,
-      scale: 5,
-    }
-    const stepData1 = initStepData(data1)
-    expect(stepData1.translate).toEqual({
-      x: 0,
-      y: 0,
-      z: 30,
-    })
+  it('transitionDuration', () => {
+    expect(transitionDuration(2000)).toBe('2s')
 
-    expect(stepData1.rotate).toEqual({
-      x: 0,
-      y: 0,
-      z: 30,
-    })
-    expect(stepData1.scale).toEqual(data1.scale)
-    expect(reverseData(stepData1)).toEqual({
-      translate: {
-        x: 0,
-        y: 0,
-        z: -30,
-      },
-      rotate: {
-        x: 0,
-        y: 0,
-        z: -30,
-      },
-      scale: 0.2,
-    })
+    expect(transitionDuration('1.4s', true)).toBe(1400)
   })
 })

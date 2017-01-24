@@ -3,6 +3,7 @@
  * @parm Object data, the data is generated from initStepData,
  * so every needed property exists surely
  * @return Object reversed data
+ * 反转每部的偏移数据，给impress-canvas用
  **/
 const reverseData = data => ({
   translate: {

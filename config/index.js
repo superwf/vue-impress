@@ -1,8 +1,5 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
-require('babel-register')
 var path = require('path')
-
-const proxyTable = {}
 
 module.exports = {
   build: {
@@ -24,7 +21,7 @@ module.exports = {
     port: 8080,
     assetsSubDirectory: 'example',
     assetsPublicPath: '/',
-    proxyTable: proxyTable,
+    proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

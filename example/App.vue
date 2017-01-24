@@ -1,18 +1,12 @@
-<template>
-  <div>
-    <div class="app1" @click="app1NextStep">
-      <impress-viewport ref="app1" :steps="steps" />
-    </div>
-    <!-- <div class="app2" @click="app2NextStep"> -->
-    <!--   <impress-viewport ref="app2" :steps="steps" /> -->
-    <!-- </div> -->
-  </div>
+<template lang="pug">
+  .app(@click="appNextStep")
+    impress-viewport(ref="app", :steps="steps", :config="config")
 </template>
 
 <script>
 import Vue from 'vue'
 import VueImpress from '../src'
-import { getOffset } from './utils'
+import Com from './Com.vue'
 
 Vue.use(VueImpress)
 
@@ -20,21 +14,24 @@ export default {
 
   // mounted() {
   //   setInterval(() => {
-  //     this.$refs.app1.nextStep()
-  //   }, 2000)
+  //     this.$refs.app.nextStep()
+  //   }, 3000)
   // },
 
+  components: {
+    Com,
+  },
+
   methods: {
-    app1NextStep(e) {
+    appNextStep(e) {
       if (e) {
         const div = e.currentTarget
-        if (div) {
-          const offset = getOffset(div)
-          if (e.clientX < offset.left + (div.clientWidth * 0.2)) {
-            this.$refs.app1.prevStep()
+        if (div === e.target) {
+          if (e.offsetX < div.clientWidth * 0.2) {
+            this.$refs.app.prevStep()
           }
-          if (e.clientX > offset.left + (div.clientWidth * 0.8)) {
-            this.$refs.app1.nextStep()
+          if (e.offsetX > div.clientWidth * 0.8) {
+            this.$refs.app.nextStep()
           }
         }
       }
@@ -46,22 +43,43 @@ export default {
 
   data() {
     return {
-      width: 500,
-      height: 300,
+      config: {
+        width: 500,
+        height: 300,
+        transitionDuration: 1200,
+        perspective: 800,
+        fullscreen: true,
+      },
       steps: [{
         x: -1000,
         y: -300,
-        content: 'first step',
+        /* content could be vue instance
+        * 可以传入vue实例
+        */
+        content: new Vue({
+          propsData: {
+            myname: 'abc',
+          },
+          ...Com,
+        }),
       }, {
         x: -500,
         y: -300,
         rotate: 60,
-        content: 'step 2',
+        /* content could be vue component
+        * 可以传入vue组件
+        */
+        content: Com,
+        transitionDuration: 1000,
       }, {
         x: 0,
         y: -300,
+        z: 900,
         scale: 5,
-        rotate: 90,
+        rotate: 50,
+        /* text content
+        * 可以传入普通文本
+        */
         content: 'step 3',
       }, {
         x: 1500,
@@ -75,20 +93,13 @@ export default {
 </script>
 
 <style scoped>
-  .app1, .app2 {
-    width: 500px;
-    height: 300px;
-    border: 1px solid;
+  .app {
+    width: 100%;
+    height: 100%;
     position: absolute;
     overflow: hidden;
-  }
-  .app1 {
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
-  }
-
-  .app2 {
-    left: 600px;
   }
 </style>

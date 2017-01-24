@@ -1,5 +1,11 @@
 .impress-step {
   position: absolute;
-  transition: transform 1s;
+  transition: opacity 1s;
   transform-style: preserve-3d;
+  will-change: opactiy;
+  opacity: 0.3;
+
+  &.active {
+    opacity: 1;
+  }
 }

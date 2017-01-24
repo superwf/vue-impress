@@ -10,7 +10,8 @@
 
 .impress-viewport, .impress-canvas {
   position: absolute;
-  transition: transform 1s;
+  z-index: -1;
+  transition-property: transform;
   transform-style: preserve-3d;
   will-change: transform;
 }

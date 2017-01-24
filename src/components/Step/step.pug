@@ -1,2 +1,5 @@
-.impress-step(":style"="style", @click="click(index)")
-  | {{step.content}}
+.impress-step(":style"="style", @click="click(index)", :class="{active: active, present: present}")
+  template(v-if="contentIsString")
+    | {{ step.content }}
+  div(v-else-if="contentIsVue", ref="mountPoint")
+  component(v-else, :is="step.content")

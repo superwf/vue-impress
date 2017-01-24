@@ -1,58 +1,34 @@
-import toNumber from './toNumber'
-
-export { toNumber }
-
-// `triggerEvent` builds a custom DOM event with given `eventName` and `detail` data
-// and triggers it on element given as `el`.
-export function triggerEvent(el, eventName, detail) {
-  const event = document.createEvent('CustomEvent')
-  event.initCustomEvent(eventName, true, true, detail)
-  el.dispatchEvent(event)
-}
-
-// `translate` builds a translate transform string for given data.
+/* `translate` builds a translate transform string for given data. */
 export function translate(t) {
-  const z = toNumber(t.z, 0)
-  return ` translate3d(${t.x}px,${t.y}px,${z}px) `
+  return ` translate3d(${t.x}px, ${t.y}px, ${t.z}px)`
 }
 
-// `rotate` builds a rotate transform string for given data.
-// By default the rotations are in X Y Z order that can be reverted by passing `true`
-// as second parameter.
+/* `rotate` builds a rotate transform string for given data.
+ * By default the rotations are in X Y Z order that can be reverted by passing `true`
+ * as second parameter.
+ * 我没明白revert有什么用，但是还是加上了
+ */
 export function rotate(r, revert) {
-  const rX = r.x ? ` rotateX(${r.x}deg) ` : ''
-  const rY = r.y ? ` rotateY(${r.y}deg) ` : ''
-  const rZ = r.z ? ` rotateZ(${r.z}deg) ` : ''
+  const rX = ` rotateX(${r.x}deg)`
+  const rY = ` rotateY(${r.y}deg)`
+  const rZ = ` rotateZ(${r.z}deg)`
 
   return revert ? rZ + rY + rX : rX + rY + rZ
 }
 
-// `scale` builds a scale transform string for given data.
+/* `scale` builds a scale transform string for given data. */
 export function scale(s) {
-  return ` scale(${s}) `
+  return ` scale(${s})`
 }
 
-// `computeWindowScale` counts the scale factor between window size and size
-// defined for the presentation in the config.
-export function computeWindowScale(config) {
-  const hScale = window.innerHeight / config.height
-  const wScale = window.innerWidth / config.width
-  let containScale = hScale > wScale ? wScale : hScale
+const dummy = document.createElement('dummy')
 
-  if (config.maxScale && scale > config.maxScale) {
-    containScale = config.maxScale
-  }
-
-  if (config.minScale && scale < config.minScale) {
-    containScale = config.minScale
-  }
-
-  return containScale
-}
-
+/* add css prefix, copy from impress.js'
+ * 只在验证浏览器支持中用一下，vue本身会管css的前缀问题
+ **/
 export const pfx = (function prefix() {
-  const style = document.createElement('dummy').style
-  const prefixes = 'Webkit Moz O ms Khtml'.split(' ')
+  const style = dummy.style
+  const prefixes = 'webkit moz O ms Khtml'.split(' ')
   const memory = {}
 
   return function withPrefix(prop) {
@@ -73,10 +49,14 @@ export const pfx = (function prefix() {
   }
 }())
 
+/* from time unit `ms` to `s` for transition-duration
+ * when revert is false transform 1000 to 1s
+ * when revert is true transform 1s to 1000
+ * */
+export const transitionDuration = (duration, revert = false) => (revert ? duration.slice(0, duration.length - 1) * 1000 : `${duration / 1000}s`)
+
 
 // CHECK SUPPORT
-const dummy = document.createElement('dummy')
-
 const ua = navigator.userAgent.toLowerCase()
 export const impressSupported =
 
