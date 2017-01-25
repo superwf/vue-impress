@@ -2,10 +2,10 @@ import expect from 'expect'
 import computeScale from '../../../../src/utils/computeScale'
 
 describe('utils/computeScale', () => {
-  it('computeScale', () => {
+  it('computeScale use window as container', () => {
     const container = {
-      innerWidth: 200,
-      innerHeight: 500,
+      width: 200,
+      height: 500,
     }
     const config = {
       width: 400,
@@ -13,11 +13,11 @@ describe('utils/computeScale', () => {
     }
 
     const scale = computeScale(container, config)
-    expect(scale).toBe(container.innerWidth / config.width)
+    expect(scale).toBe(container.width / config.width)
 
     const container1 = {
-      innerWidth: 300,
-      innerHeight: 500,
+      width: 300,
+      height: 500,
     }
     const config1 = {
       width: 400,
@@ -25,6 +25,6 @@ describe('utils/computeScale', () => {
     }
 
     const scale1 = computeScale(container1, config1)
-    expect(scale1).toBe(container1.innerHeight / config1.height)
+    expect(scale1).toBe(container1.height / config1.height)
   })
 })

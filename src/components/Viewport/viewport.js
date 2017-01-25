@@ -48,10 +48,7 @@ export default {
       const duration = currentData.transitionDuration || this.transitionDuration
 
       /* default perspective 1000px */
-
-      const container = window
-      const containerScale = computeScale(container, this.config)
-      const perspective = `${(this.config.perspective || 1000) / containerScale}px`
+      const perspective = `${(this.config.perspective || 1000) / this.containerScale}px`
 
       this.initialRootStyle = {
         /* perspective is for the elements in step which have transform css setting
@@ -59,7 +56,7 @@ export default {
          * 一开始没看出用处，后来发现perspective是给每个step里设置了transform的元素产生视角用的，若step中没有3d变换的元素是没什么用 */
         perspective,
         transitionDuration: duration,
-        transform: scale(target.scale * containerScale),
+        transform: scale(target.scale * this.containerScale),
       }
       this.canvasStyle = {
         transitionDuration: duration,
@@ -93,25 +90,36 @@ export default {
   },
 
   mounted() {
-    const parent = this.$refs.root.offsetParent
-    console.log(parent)
-    this.gotoStep(0)
-
     this.$on('impress:goto', (index) => {
       this.gotoStep(index)
     })
-
-    this.resize = debounce(() => {
-      this.gotoStep(this.stepIndex)
-    }, 250)
-
     if (this.config.fullscreen) {
+      this.resize = debounce(() => {
+        this.containerScale = computeScale({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        }, this.config)
+        this.gotoStep(this.stepIndex)
+      }, 250)
+      this.containerScale = computeScale({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }, this.config)
       window.addEventListener('resize', this.resize)
+    } else {
+      const parent = this.$refs.root.offsetParent
+      this.containerScale = computeScale({
+        width: parent.clientWidth,
+        height: parent.clientHeight,
+      }, this.config)
     }
+    this.gotoStep(0)
   },
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.resize)
+    if (this.config.fullscreen) {
+      window.removeEventListener('resize', this.resize)
+    }
   },
 
   data() {
@@ -126,6 +134,7 @@ export default {
       /* for debounce impress:stepenter event in steps duration time
        * 给每个step enter之后的timeout用 */
       stepEnterTimeout: null,
+      containerScale: null,
     }
   },
 }

@@ -1,7 +1,7 @@
 import expect, { spyOn, createSpy } from 'expect'
 import Vue from 'vue'
 import VueImpress from '../../../../src/index'
-import App from '../../../../example/App.vue'
+import Fullscreen from '../../../../example/Fullscreen.vue'
 import { pfx, scale, rotate, translate, transitionDuration } from '../../../../src/utils'
 import reverseData from '../../../../src/utils/reverseData'
 import computeScale from '../../../../src/utils/computeScale'
@@ -18,7 +18,7 @@ describe('vue-impress', () => {
     const inner = document.createElement('div')
     div.appendChild(inner)
     document.body.appendChild(div)
-    instance = new Vue(App).$mount(inner)
+    instance = new Vue(Fullscreen).$mount(inner)
   })
 
   afterEach(() => {
@@ -50,7 +50,7 @@ describe('vue-impress', () => {
       /* in phantomjs is webkitPerspective
        * phantomjs中的还是webkitPerspective */
       const viewportPerspective = viewportStyle[pfx('perspective')]
-      const containerScale = computeScale(window, viewport.config)
+      const containerScale = viewport.containerScale
       const containerPerspective = viewport.config.perspective / containerScale
       expect(viewportPerspective).toBe(`${containerPerspective}px`)
       const currentData = instance.$refs.app.stepsData[2]

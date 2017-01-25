@@ -1,13 +1,13 @@
 <template lang="pug">
-  .app(@click="appNextStep")
-    impress-viewport(ref="app", :steps="steps", :config="config")
+  .app(tabindex="1", ref="app", @keyup.right.space="impressNextStep", @keyup.left="impressPrevStep")
+    impress-viewport(ref="impress", :steps="steps", :config="config")
 </template>
 
 <script>
 import Vue from 'vue'
 import VueImpress from '../src'
 // import VueImpress from '../dist/vue-impress'
-import Com from './Com.vue'
+import CustomCom from './CustomCom.vue'
 
 // require('../dist/vue-impress.css')
 
@@ -15,40 +15,28 @@ Vue.use(VueImpress)
 
 export default {
 
-  // mounted() {
-  //   setInterval(() => {
-  //     this.$refs.app.nextStep()
-  //   }, 3000)
-  // },
-
   components: {
-    Com,
+    CustomCom,
   },
 
   methods: {
-    appNextStep(e) {
-      if (e) {
-        const div = e.currentTarget
-        if (div === e.target) {
-          if (e.offsetX < div.clientWidth * 0.2) {
-            this.$refs.app.prevStep()
-          }
-          if (e.offsetX > div.clientWidth * 0.8) {
-            this.$refs.app.nextStep()
-          }
-        }
-      }
+    impressPrevStep() {
+      this.$refs.impress.prevStep()
     },
-    // app2NextStep() {
-    //   this.$refs.app2.nextStep()
-    // },
+    impressNextStep() {
+      this.$refs.impress.nextStep()
+    },
+  },
+
+  mounted() {
+    this.$refs.app.focus()
   },
 
   data() {
     return {
       config: {
-        width: 500,
-        height: 300,
+        width: 1000,
+        height: 600,
         transitionDuration: 1200,
         perspective: 800,
 
@@ -60,6 +48,25 @@ export default {
       steps: [{
         x: -1000,
         y: -300,
+        scale: 1,
+        /* text content
+        * 可以传入普通文本
+        */
+        content: 'Hint: press space, right key to next step, left to prev step',
+      }, {
+        x: 0,
+        y: -300,
+        scale: 2,
+        /* content could be vue component
+        * 可以传入vue组件
+        */
+        content: CustomCom,
+        transitionDuration: 1000,
+      }, {
+        x: 1500,
+        y: -300,
+        z: 200,
+        scale: 3,
         /* content could be vue instance
         * 可以传入vue实例
         */
@@ -67,30 +74,17 @@ export default {
           propsData: {
             myname: 'abc',
           },
-          ...Com,
+          ...CustomCom,
         }),
       }, {
-        x: -500,
-        y: -300,
-        rotate: 60,
-        /* content could be vue component
-        * 可以传入vue组件
-        */
-        content: Com,
-        transitionDuration: 1000,
+        x: 0,
+        y: 0,
+        rotate: 45,
+        content: 'rotate step',
       }, {
         x: 0,
-        y: -300,
+        y: 0,
         z: 900,
-        scale: 5,
-        rotate: 50,
-        /* text content
-        * 可以传入普通文本
-        */
-        content: 'step 3',
-      }, {
-        x: 1500,
-        y: 600,
         scale: 10,
         content: 'overview',
       }],
@@ -99,7 +93,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  body {
+    overflow: hidden;
+    height: 100%;
+  }
   .app {
     width: 100%;
     height: 100%;
@@ -108,5 +106,14 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
+  }
+  .impress-step {
+    width: 500px;
+    border: solid 1px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .impress-step.active {
+    cursor: auto;
   }
 </style>

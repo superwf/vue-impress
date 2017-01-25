@@ -1,8 +1,7 @@
-<template>
-  <div>
-    with props: {{ myname }}
-    <b> rotated text </b>
-  </div>
+<template lang="pug">
+  .custom-com
+    | with props: {{ myname }}
+    b rotated text
 </template>
 
 <script>
@@ -26,5 +25,6 @@ export default {
     transition-duration: 1s;
     transition-delay: 2s;
     transform: rotateY(60deg);
+    margin-left: 30px;
   }
 </style>
