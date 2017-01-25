@@ -5,8 +5,9 @@
   "main": "dist/vue-impress.js",
   "scripts": {
     "dev": "node build/dev-server.js",
-    "test": "mocha",
+    "test": "npm run unit",
     "build": "NODE_ENV=production node build/build.js",
+    "prepublish": "npm run build",
     "unit": "karma start test/unit/karma.conf.js"
   },
   "repository": {

@@ -8,12 +8,185 @@ At the end of impress.js, the words *use the source, Luke!* really encouraged me
 
 ## install
 
-not published yet
-
 ```
 npm install vue-impress
 ```
 
 ## usage
 
-check the [example](https://github.com/superwf/vue-impress/blob/master/example/App.vue) and read the comment there
+Define a Vue component file, then mount it.
+Do not forget the css file.
+```javascript
+
+<template lang="pug">
+  .app(tabindex="1", ref="app", @keyup.right.space="impressNextStep", @keyup.left="impressPrevStep")
+    impress-viewport(ref="impress", :steps="steps", :config="config")
+</template>
+
+<script>
+import Vue from 'vue'
+import VueImpress from 'vue-impress'
+import 'vue-impress/dist/vue-impress.css'
+
+Vue.use(VueImpress)
+export default {
+
+  methods: {
+    impressPrevStep() {
+      this.$refs.impress.prevStep()
+    },
+    impressNextStep() {
+      this.$refs.impress.nextStep()
+    },
+  },
+
+  mounted() {
+    this.$refs.app.focus()
+  },
+
+  data() {
+    return {
+      config: {
+        width: 1000, // required
+        height: 600, // required
+        transitionDuration: 1200, default 1000
+        perspective: 800, // default 1000
+
+        /* in fullscreen, only first viewport instance work, others are meaningless
+         * 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
+         * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
+        fullscreen: true, // default false
+      },
+      steps: [{  // steps array required
+        x: -1000,
+        y: -300,
+        content: 'Hint: press space, right key to next step, left to prev step',
+      }, {
+        x: 0,
+        y: -300,
+        scale: 2,
+        /* content could be vue component
+        * 可以传入vue组件
+        */
+        content: CustomCom,
+        transitionDuration: 1000,
+      }, {
+        x: 1500,
+        y: -300,
+        z: 200,
+        scale: 3,
+        /* content could be vue instance
+        * 可以传入vue实例
+        */
+        content: new Vue({
+          propsData: {
+            myname: 'abc',
+          },
+          ...CustomCom,
+        }),
+      }, {
+        x: 0,
+        y: 0,
+        rotate: 45,
+        content: 'rotate step',
+      }, {
+        x: 0,
+        y: 0,
+        z: 900,
+        scale: 10,
+        content: 'overview',
+      }],
+    }
+  },
+}
+</script>
+
+<style>
+  body {
+    overflow: hidden;
+    height: 100%;
+  }
+  .app {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+  .impress-step {
+    width: 500px;
+    border: solid 1px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .impress-step.active {
+    cursor: auto;
+  }
+</style>
+
+```
+
+## API
+
+### Props
+
+| name | type |
+| ---- | ---- |
+| config | Object |
+| steps | [Object] |
+
+#### the `config` prop
+
+| key | type | description |
+| --- | ---- | ---- |
+| width | Number | required, use for compute scale ratio |
+| height | Number | required, use for compute scale ratio|
+| transitionDuration | Number | default 1000, unit ms, duration time between step animation |
+| perspective | Number | default 1000, the distance to generate 3d stype |
+| fullscreen | Boolean | default false |
+
+When `fullscreen` is true, it means that there should be only one instance in current page. vue-impress will use config width and height and window innerWidth, innerHeight to compute scale.
+When `fullscreen` is false, the vue-impress parent element should has has a absolute or relative position, and has a explicit width and height
+
+
+#### the object in `steps` array prop
+
+| key | type | description |
+| --- | ---- | ---- |
+| x | Number | default 0, translate x position |
+| y | Number | default 0, translate y position |
+| z | Number | default 0, translate z position |
+| rotateX | Number | default 0, rotate deg by x axis |
+| rotateY | Number | default 0, rotate deg by y axis |
+| rotateZ | Number | default 0, rotate deg by z axis |
+| rotate | Number | default 0, the same as rotateZ |
+| scale | Number | default 1 |
+| transitionDuration | Number | if has this in step, it will overwrite `transitionDuration` in config prop, just for this step |
+
+### Events
+
+| name | description |
+| --- | ---- |
+| `impress:stepenter` | triggered when the step is in active, with param step index |
+| `impress:stepleave` | triggered when step leave active, with param step index |
+
+### instance methods
+
+| name | param| description |
+| --- | ---- | ---- |
+| gotoStep | index | when the step is in active |
+| nextStep | | goto next step, same as gotoStep( index + 1 ), goto first step when current is last step |
+| prevStep | | goto prev step, same as gotoStep( index - 1 ), goto last step when current is first step |
+
+## element class
+
+| name | description |
+| --- | --- |
+| impress-viewport | first wrapper, for 3d perspective |
+| impress-canvas | second wrapper, fly to active step when step changes |
+| impress-step | each step class, the default font-size is 30px, you can overwrite it by your css |
+
+
+check the [example](https://github.com/superwf/vue-impress/blob/master/example/Fullscreen.vue) and read the comment there
