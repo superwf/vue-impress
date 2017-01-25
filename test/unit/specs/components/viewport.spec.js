@@ -7,7 +7,7 @@ import reverseData from '../../../../src/utils/reverseData'
 import computeScale from '../../../../src/utils/computeScale'
 
 
-describe('vue-impress', () => {
+describe('vue-impress fullscreen mode', () => {
   Vue.use(VueImpress)
 
   let div
@@ -36,9 +36,10 @@ describe('vue-impress', () => {
   })
 
   it('viewport instance gotoStep method', (done) => {
-    const viewport = instance.$refs.app
+    const viewport = instance.$refs.impress
     viewport.gotoStep(2)
     Vue.nextTick(() => {
+      expect(typeof viewport.resize).toBe('function')
       const steps = document.querySelectorAll('.impress-step')
       expect(steps[2].classList.contains('active')).toBe(true)
 
@@ -53,7 +54,7 @@ describe('vue-impress', () => {
       const containerScale = viewport.containerScale
       const containerPerspective = viewport.config.perspective / containerScale
       expect(viewportPerspective).toBe(`${containerPerspective}px`)
-      const currentData = instance.$refs.app.stepsData[2]
+      const currentData = viewport.stepsData[2]
       const target = reverseData(currentData)
 
       /* in phantomjs is webkitTransform
@@ -74,14 +75,14 @@ describe('vue-impress', () => {
   })
 
   it('test events impress:goto', () => {
-    const viewport = instance.$refs.app
+    const viewport = instance.$refs.impress
     spyOn(viewport, 'gotoStep')
     viewport.$emit('impress:goto', 1)
     expect(viewport.gotoStep).toHaveBeenCalledWith(1)
   })
 
   it('test events impress:stepenter, impress:stepleave', (done) => {
-    const viewport = instance.$refs.app
+    const viewport = instance.$refs.impress
     const stepEnterSpy = createSpy()
     const stepLeaveSpy = createSpy()
     viewport.$on('impress:stepenter', stepEnterSpy)
@@ -94,5 +95,82 @@ describe('vue-impress', () => {
       expect(stepEnterSpy).toHaveBeenCalledWith(2)
       done()
     }, instance.config.transitionDuration)
+  })
+
+  it('click step to goto that step', () => {
+    const viewport = instance.$refs.impress
+    const spy = spyOn(viewport, 'gotoStep')
+    const e = document.createEvent('HTMLEvents')
+    e.initEvent('click', false, true)
+    const steps = document.querySelectorAll('.impress-step')
+    expect(spy).toNotHaveBeenCalled()
+    steps[1].dispatchEvent(e)
+    expect(spy).toHaveBeenCalled()
+  })
+
+  it('nextStep', () => {
+    const viewport = instance.$refs.impress
+    expect(viewport.stepIndex).toBe(0)
+    viewport.nextStep()
+    expect(viewport.stepIndex).toBe(1)
+
+    viewport.gotoStep(viewport.stepsData.length - 1)
+    viewport.nextStep()
+    expect(viewport.stepIndex).toBe(0)
+  })
+
+  it('prevStep', () => {
+    const viewport = instance.$refs.impress
+    expect(viewport.stepIndex).toBe(0)
+    viewport.prevStep()
+    expect(viewport.stepIndex).toBe(viewport.stepsData.length - 1)
+
+    viewport.prevStep()
+    expect(viewport.stepIndex).toBe(viewport.stepsData.length - 2)
+  })
+})
+
+describe('vue-impress none fullscreen mode', () => {
+  Vue.use(VueImpress)
+
+  let div
+  let instance
+
+  beforeEach(() => {
+    div = document.createElement('div')
+    div.style.position = 'absolute'
+    div.style.width = '800px'
+    div.style.height = '400px'
+
+    const inner = document.createElement('div')
+    div.appendChild(inner)
+    document.body.appendChild(div)
+    const data = Fullscreen.data()
+    data.config.fullscreen = false
+    const NoneFullscreen = Object.assign({}, Fullscreen, {
+      data() {
+        return data
+      },
+    })
+    instance = new Vue(NoneFullscreen).$mount(inner)
+  })
+
+  afterEach(() => {
+    instance.$destroy()
+    document.body.removeChild(div)
+  })
+
+
+  it('first step( steps[0] ) is default active', (done) => {
+    const viewport = instance.$refs.impress
+    Vue.nextTick(() => {
+      expect(typeof viewport.resize).toBe('undefined')
+      const containerScale = computeScale({
+        width: div.clientWidth,
+        height: div.clientHeight,
+      }, viewport.config)
+      expect(viewport.containerScale).toEqual(containerScale)
+      done()
+    })
   })
 })

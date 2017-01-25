@@ -42,7 +42,7 @@ describe('test utils', () => {
     const data1 = {
       z: 30,
       rotate: 30,
-      scale: 5,
+      scale: 0,
       transitionDuration: 3000,
     }
     const stepData1 = initStepData(data1)
@@ -70,7 +70,7 @@ describe('test utils', () => {
         y: 0,
         z: -30,
       },
-      scale: 0.2,
+      scale: 1,
     })
   })
 })
