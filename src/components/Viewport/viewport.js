@@ -1,4 +1,4 @@
-import throttle from 'lodash/throttle'
+import debounce from '../../utils/debounce'
 import Step from '../Step'
 import { translate, scale, rotate, transitionDuration, impressSupported } from '../../utils'
 import initStepData from '../../utils/initStepData'
@@ -13,11 +13,6 @@ export default {
       type: Array,
       required: true,
     },
-
-    /* in fullscreen, only first viewport instance work, others are meaningless
-     * 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
-     * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
-    fullscreen: Boolean,
 
     config: {
       type: Object,
@@ -54,7 +49,7 @@ export default {
 
       /* default perspective 1000px */
 
-      const container = global
+      const container = window
       const containerScale = computeScale(container, this.config)
       const perspective = `${(this.config.perspective || 1000) / containerScale}px`
 
@@ -98,14 +93,15 @@ export default {
   },
 
   mounted() {
-    // const parent = this.$refs.root.offsetParent
+    const parent = this.$refs.root.offsetParent
+    console.log(parent)
     this.gotoStep(0)
 
     this.$on('impress:goto', (index) => {
       this.gotoStep(index)
     })
 
-    this.resize = throttle(() => {
+    this.resize = debounce(() => {
       this.gotoStep(this.stepIndex)
     }, 250)
 
@@ -127,7 +123,7 @@ export default {
       lastStepIndex: null,
       stepsData: [],
       transitionDuration: '',
-      /* for throttle impress:stepenter event in steps duration time
+      /* for debounce impress:stepenter event in steps duration time
        * 给每个step enter之后的timeout用 */
       stepEnterTimeout: null,
     }

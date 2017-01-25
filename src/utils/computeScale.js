@@ -3,18 +3,7 @@
 function computeScale(container, config) {
   const hScale = container.innerHeight / config.height
   const wScale = container.innerWidth / config.width
-  let scale = hScale > wScale ? wScale : hScale
-
-  if (config.maxScale && scale > config.maxScale) {
-    scale = config.maxScale
-  }
-
-  if (config.minScale && scale < config.minScale) {
-    scale = config.minScale
-  }
-
-  return scale
+  return hScale > wScale ? wScale : hScale
 }
-
 
 export default computeScale

@@ -6,7 +6,10 @@
 <script>
 import Vue from 'vue'
 import VueImpress from '../src'
+// import VueImpress from '../dist/vue-impress'
 import Com from './Com.vue'
+
+// require('../dist/vue-impress.css')
 
 Vue.use(VueImpress)
 
@@ -48,6 +51,10 @@ export default {
         height: 300,
         transitionDuration: 1200,
         perspective: 800,
+
+        /* in fullscreen, only first viewport instance work, others are meaningless
+         * 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
+         * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
         fullscreen: true,
       },
       steps: [{

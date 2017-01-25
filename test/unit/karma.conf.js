@@ -56,6 +56,17 @@ module.exports = function karmaConfig(config) {
     //    http://karma-runner.github.io/0.13/config/browsers.html
     // 2. add it to the `browsers` array below.
     browsers: ['PhantomJS'],
+    // browsers: ['desktop'],
+    customLaunchers: {
+      mobile: {
+        base: 'Chrome',
+        flags: ['--window-size=320,600'],
+      },
+      desktop: {
+        base: 'Chrome',
+        flags: ['--window-size=700,600'],
+      },
+    },
     frameworks: ['mocha', 'expect'],
     reporters: ['spec', 'coverage'],
     files: ['./index.js'],

@@ -4,6 +4,7 @@ import VueImpress from '../../../../src/index'
 import App from '../../../../example/App.vue'
 import { pfx, scale, rotate, translate, transitionDuration } from '../../../../src/utils'
 import reverseData from '../../../../src/utils/reverseData'
+import computeScale from '../../../../src/utils/computeScale'
 
 
 describe('vue-impress', () => {
@@ -49,14 +50,16 @@ describe('vue-impress', () => {
       /* in phantomjs is webkitPerspective
        * phantomjs中的还是webkitPerspective */
       const viewportPerspective = viewportStyle[pfx('perspective')]
-      expect(viewportPerspective).toBe('1000px')
+      const containerScale = computeScale(window, viewport.config)
+      const containerPerspective = viewport.config.perspective / containerScale
+      expect(viewportPerspective).toBe(`${containerPerspective}px`)
       const currentData = instance.$refs.app.stepsData[2]
       const target = reverseData(currentData)
 
       /* in phantomjs is webkitTransform
        * phantomjs中的还是webkitTransform */
       const viewportTransform = viewportStyle[pfx('transform')]
-      expect(viewportTransform).toBe(scale(target.scale).trim())
+      expect(viewportTransform).toBe(scale(target.scale * containerScale).trim())
 
       const canvasStyle = document.querySelector('.impress-canvas').style
       const canvasTransitionDuration = canvasStyle[pfx('transitionDuration')]

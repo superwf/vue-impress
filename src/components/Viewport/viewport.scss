@@ -3,15 +3,17 @@
   width: 100%;
   // overflow: hidden;
   transform-origin: left top 0px;
-  transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+  transition-property: transform, perspective;
+  will-change: transform, perspective;
+}
+.impress-canvas {
+  will-change: transform;
+  transition-property: transform;
 }
 
 .impress-viewport, .impress-canvas {
   position: absolute;
-  z-index: -1;
-  transition-property: transform;
   transform-style: preserve-3d;
-  will-change: transform;
 }
