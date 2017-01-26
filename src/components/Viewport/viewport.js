@@ -86,6 +86,9 @@ export default {
       stepData.content = data.content
       return stepData
     })
+    if (this.config.fullscreen !== false) {
+      this.config.fullscreen = true
+    }
     this.transitionDuration = transitionDuration(this.config.transitionDuration || 1000)
   },
 

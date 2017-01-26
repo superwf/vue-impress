@@ -24,13 +24,11 @@ export default {
     app1NextStep(e) {
       if (e) {
         const div = e.currentTarget
-        if (div === e.target) {
-          if (e.offsetX < div.clientWidth * 0.2) {
-            this.$refs.app1.prevStep()
-          }
-          if (e.offsetX > div.clientWidth * 0.8) {
-            this.$refs.app1.nextStep()
-          }
+        if (e.offsetX < div.clientWidth * 0.2) {
+          this.$refs.app1.prevStep()
+        }
+        if (e.offsetX > div.clientWidth * 0.8) {
+          this.$refs.app1.nextStep()
         }
       }
     },
@@ -46,6 +44,7 @@ export default {
         height: 300,
         transitionDuration: 1000,
         perspective: 1500,
+        fullscreen: false,
       },
       app1Steps: [{
         x: -1000,
@@ -96,6 +95,8 @@ export default {
     overflow: hidden;
     top: 50px;
     border: 1px solid;
+    display: flex;
+    align-items: center;
   }
   .app1 {
     left: 50px;
@@ -103,8 +104,11 @@ export default {
   .app2 {
     left: 650px;
   }
-  .impress-step {
-    width: 200px;
-    text-align: center;
+  .impress-canvas {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

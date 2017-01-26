@@ -43,12 +43,11 @@ export default {
         /* in fullscreen, only first viewport instance work, others are meaningless
          * 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
          * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
-        fullscreen: true,
+        // fullscreen: true,
       },
       steps: [{
-        x: -1000,
-        y: -300,
-        scale: 1,
+        x: 500,
+        y: 0,
         /* text content
         * 可以传入普通文本
         */
@@ -66,6 +65,7 @@ export default {
         x: 1500,
         y: -300,
         z: 200,
+        rotate: 90,
         scale: 3,
         /* content could be vue instance
         * 可以传入vue实例
@@ -77,15 +77,22 @@ export default {
           ...CustomCom,
         }),
       }, {
-        x: 0,
-        y: 0,
-        rotate: 45,
-        content: 'rotate step',
+        x: 1500,
+        y: -300,
+        z: 200,
+        rotateX: 90,
+        scale: 3,
+        content: 'X axis rotate',
       }, {
         x: 0,
         y: 0,
+        rotate: 3600,
+        content: 'rotate step',
+      }, {
+        x: 0,
+        y: 1000,
         z: 900,
-        scale: 10,
+        scale: 5,
         content: 'overview',
       }],
     }
@@ -94,18 +101,12 @@ export default {
 </script>
 
 <style>
-  body {
+  html, body {
     overflow: hidden;
     height: 100%;
-  }
-  .app {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    overflow: hidden;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
   }
   .impress-step {
     width: 500px;

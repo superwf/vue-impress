@@ -55,7 +55,7 @@ export default {
         /* in fullscreen, only first viewport instance work, others are meaningless
          * 若全屏模式，则只有第一个viewport的实例可以正常工作，大概...
          * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
-        fullscreen: true, // default false
+        fullscreen: true, // default true
       },
       steps: [{  // steps array required
         x: -1000,
@@ -145,7 +145,7 @@ export default {
 | height | Number | required, use for compute scale ratio|
 | transitionDuration | Number | default 1000, unit ms, duration time between step animation |
 | perspective | Number | default 1000, the distance to generate 3d stype |
-| fullscreen | Boolean | default false |
+| fullscreen | Boolean | default true |
 
 When `fullscreen` is true, it means that there should be only one instance in current page. vue-impress will use config width and height and window innerWidth, innerHeight to compute scale.
 When `fullscreen` is false, the vue-impress parent element should has has a absolute or relative position, and has a explicit width and height

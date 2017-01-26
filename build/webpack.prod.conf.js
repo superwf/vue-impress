@@ -30,6 +30,11 @@ var webpackConfig = merge(baseWebpackConfig, {
       css: ExtractTextPlugin.extract('css'),
       scss: ExtractTextPlugin.extract('css!sass'),
     },
+    postcss: [
+      require('autoprefixer')({
+        browsers: ['last 2 versions'],
+      })
+    ],
   },
   externals: {
     vue: {

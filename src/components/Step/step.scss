@@ -1,7 +1,8 @@
 .impress-step {
   font-size: 30px;
-  position: absolute;
   transition: opacity 1s;
+  position: absolute;
+  transform-origin: center center 0px;
   transform-style: preserve-3d;
   will-change: opactiy;
   opacity: 0.3;

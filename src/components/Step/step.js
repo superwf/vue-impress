@@ -12,7 +12,7 @@ export default {
   computed: {
     style() {
       const { step } = this
-      const transform = `translate(-50%, -50%) ${translate(step.translate)}
+      const transform = `${translate(step.translate)}
         ${rotate(step.rotate)} ${scale(step.scale)}`
       return {
         transform,
