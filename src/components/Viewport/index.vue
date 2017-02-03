@@ -2,4 +2,4 @@
 
 <script src="./viewport.js"></script>
 
-<style lang="scss" src="./viewport.scss" scoped></style>
+<style lang="scss" src="./viewport.scss"></style>

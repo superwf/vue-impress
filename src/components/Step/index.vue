@@ -2,4 +2,4 @@
 
 <script src="./step.js"></script>
 
-<style lang="scss" src="./step.scss" scoped></style>
+<style lang="scss" src="./step.scss"></style>

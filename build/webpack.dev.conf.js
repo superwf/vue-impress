@@ -37,5 +37,11 @@ module.exports = merge(baseWebpackConfig, {
       template: './example/multiple.html',
       inject: false,
     }),
+    new HtmlWebpackPlugin({
+      filename: 'dna.html',
+      favicon: './example/logo.png',
+      template: './example/dna.html',
+      inject: false,
+    }),
   ]
 })

@@ -189,4 +189,17 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 | impress-step | each step class, the default font-size is 30px, you can overwrite it by your css |
 
 
-check the [example](https://github.com/superwf/vue-impress/blob/master/example/Fullscreen.vue) and read the comment there
+Check the [example](https://github.com/superwf/vue-impress/blob/master/example/Fullscreen.vue) and read the comment there
+
+```
+git clone git@github.com:superwf/vue-impress.git
+
+cd vue-impress
+
+yarn install
+
+npm run dev
+```
+
+fullscreen example http://127.0.0.1:8080
+multiple instance http://127.0.0.1:8080/multiple.html

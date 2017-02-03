@@ -41,5 +41,7 @@ module.exports = {
     'import/no-dynamic-require': 0,
     'import/prefer-default-export': 0,
     'prefer-arrow-callback': 0,
+    'comma-dangle': 0,
+    'no-unused-vars': ['error', { argsIgnorePattern: 'h' }],
   }
 }

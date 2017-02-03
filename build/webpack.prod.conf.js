@@ -61,8 +61,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.BannerPlugin(
 `/*!
- * Vue Material v${version}
- * Made with love by Marcos Moura
+ * vue-impress v${version}
  * Released under the MIT License.
  */`
     , {
