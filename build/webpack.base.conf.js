@@ -15,6 +15,7 @@ module.exports = {
     fullscreen: './example/fullscreen.js',
     multiple: './example/multiple.js',
     dna: './example/dna.js',
+    ball: './example/ball.js',
   },
   output: {
     path: config.build.assetsRoot,
