@@ -16,6 +16,7 @@ const initStepData = data => ({
     x: toNumber(data.rotateX),
     y: toNumber(data.rotateY),
     z: toNumber(data.rotateZ || data.rotate),
+    order: data.rotateOrder,
   },
   scale: toNumber(data.scale, 1),
   transitionDuration: data.transitionDuration ? transitionDuration(data.transitionDuration) : null,

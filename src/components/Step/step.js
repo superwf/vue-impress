@@ -13,7 +13,7 @@ export default {
     style() {
       const { step } = this
       const transform = `${translate(step.translate)}
-        ${rotate(step.rotate)} ${scale(step.scale)}`
+        ${rotate(step.rotate, step.rotate.order)} ${scale(step.scale)}`
       return {
         transform,
       }

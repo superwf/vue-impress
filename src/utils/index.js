@@ -8,12 +8,13 @@ export function translate(t) {
  * as second parameter.
  * 我没明白revert有什么用，但是还是加上了
  */
-export function rotate(r, revert) {
-  const rX = ` rotateX(${r.x}deg)`
-  const rY = ` rotateY(${r.y}deg)`
-  const rZ = ` rotateZ(${r.z}deg)`
-
-  return revert ? rZ + rY + rX : rX + rY + rZ
+export function rotate(r, order = ['x', 'y', 'z']) {
+  r = {
+    x: ` rotateX(${r.x}deg)`,
+    y: ` rotateY(${r.y}deg)`,
+    z: ` rotateZ(${r.z}deg)`,
+  }
+  return r[order[0]] + r[order[1]] + r[order[2]]
 }
 
 /* `scale` builds a scale transform string for given data. */

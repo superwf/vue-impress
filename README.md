@@ -162,6 +162,7 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 | rotateY | Number | default 0, rotate deg by y axis |
 | rotateZ | Number | default 0, rotate deg by z axis |
 | rotate | Number | default 0, the same as rotateZ |
+| rotateOrder | Number | default ['x', 'y', 'z'] the rotate order, it matters when rotate more than one direction |
 | scale | Number | default 1 |
 | transitionDuration | Number | if has this in step, it will overwrite `transitionDuration` in config prop, just for this step |
 

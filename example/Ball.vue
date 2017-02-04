@@ -14,34 +14,68 @@ const radius = 500
 
 // const initDegree = 0
 // const zStep = 15
-// const degreeStep = 10
+const size = 12
+const degreeStep = 360 / size
 
-for (let i = 0; i < 36; i += 1) {
-  const rotateX = i * 10
-  const xRadius = (rotateX * Math.PI) / 180
+for (let i = 0; i < size; i += 1) {
+  // const rotateX = i * 10
+  // const xRadius = (rotateX * Math.PI) / 180
   // const rotateZ = (Math.random() * 720) - 360
   // const zRadius = (rotateZ * Math.PI) / 180
-  const zRadius = (90 * Math.PI) / 180
+  // const zRadius = (90 * Math.PI) / 180
   // console.log(Math.sin(zRadius))
+  const degree = (degreeStep * i * Math.PI) / 180
   steps.push({
     // x: Math.cos(xRadius) * (Math.sin(zRadius) * radius),
     // y: Math.sin(xRadius) * (Math.sin(zRadius) * radius),
     // z: Math.cos(zRadius) * radius,
     // rotateY: rotateZ,
     // rotateX: 90 - rotateX,
-    x: Math.cos(xRadius) * (Math.sin(zRadius) * radius),
-    y: Math.sin(xRadius) * (Math.sin(zRadius) * radius),
-    rotateY: 90,
-    // rotateY: 0,
-    rotateZ: rotateX,
+    x: Math.cos(degree) * radius,
+    y: 0,
+    z: Math.sin(degree) * radius,
+    rotateY: 90 - (degreeStep * i),
     content: 'x'
   })
 }
+
+/* 上扬30度 */
+const rotateOrder = ['y', 'x', 'z']
+const yUp30 = Math.sin((30 * Math.PI) / 180) * radius
+const xRadius30 = Math.cos((30 * Math.PI) / 180) * radius
+for (let i = 0; i < size; i += 1) {
+  const degree = (degreeStep * i * Math.PI) / 180
+  steps.push({
+    x: Math.cos(degree) * xRadius30,
+    y: -yUp30,
+    z: Math.sin(degree) * xRadius30,
+    rotateY: 90 - (degreeStep * i),
+    rotateX: 30,
+    rotateOrder,
+    content: 'up'
+  })
+}
+
+const yUp60 = Math.sin((60 * Math.PI) / 180) * radius
+const xRadius60 = Math.cos((60 * Math.PI) / 180) * radius
+for (let i = 0; i < size; i += 1) {
+  const degree = (degreeStep * i * Math.PI) / 180
+  steps.push({
+    x: Math.cos(degree) * xRadius60,
+    y: -yUp60,
+    z: Math.sin(degree) * xRadius60,
+    rotateY: 90 - (degreeStep * i),
+    rotateX: 60,
+    rotateOrder,
+    content: 'up'
+  })
+}
+
 steps.unshift({
   x: 0,
-  z: 100,
   content: '',
-  scale: 1.2,
+  scale: 2,
+  rotateX: 30,
 })
 
 export default {
