@@ -15,6 +15,7 @@ const reverseData = data => ({
     x: -data.rotate.x,
     y: -data.rotate.y,
     z: -data.rotate.z,
+    order: [data.rotate.order[2], data.rotate.order[1], data.rotate.order[0]],
   },
   scale: data.scale ? (1 / data.scale) : 1,
 })

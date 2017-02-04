@@ -13,10 +13,8 @@ export default {
     style() {
       const { step } = this
       const transform = `${translate(step.translate)}
-        ${rotate(step.rotate, step.rotate.order)} ${scale(step.scale)}`
-      return {
-        transform,
-      }
+        ${rotate(step.rotate)} ${scale(step.scale)}`
+      return { transform }
     },
     /* if content is string, use slog, else use component
      * 本以为直接把vue实例放进模板里应该能直接渲染，没想到没有jsx那么方便啊

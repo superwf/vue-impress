@@ -1,5 +1,5 @@
 import expect from 'expect'
-import initStepData from '../../../../src/utils/initStepData'
+import initStepData, { defaultRotateOrder } from '../../../../src/utils/initStepData'
 import reverseData from '../../../../src/utils/reverseData'
 
 describe('test utils', () => {
@@ -21,10 +21,12 @@ describe('test utils', () => {
       x: data.rotateX,
       y: data.rotateY,
       z: 0,
+      order: defaultRotateOrder
     })
     expect(stepData.scale).toBe(1)
     expect(stepData.transitionDuration).toBe(null)
 
+    const order = Object.assign([], defaultRotateOrder)
     expect(reverseData(stepData)).toEqual({
       translate: {
         x: -10,
@@ -35,6 +37,7 @@ describe('test utils', () => {
         x: -30,
         y: -40,
         z: 0,
+        order: order.reverse(),
       },
       scale: 1,
     })
@@ -44,6 +47,7 @@ describe('test utils', () => {
       rotate: 30,
       scale: 0,
       transitionDuration: 3000,
+      rotateOrder: ['y', 'z', 'x']
     }
     const stepData1 = initStepData(data1)
     expect(stepData1.translate).toEqual({
@@ -56,6 +60,7 @@ describe('test utils', () => {
       x: 0,
       y: 0,
       z: 30,
+      order: ['y', 'z', 'x'],
     })
     expect(stepData1.scale).toEqual(data1.scale)
     expect(stepData1.transitionDuration).toBe('3s')
@@ -69,6 +74,7 @@ describe('test utils', () => {
         x: 0,
         y: 0,
         z: -30,
+        order: ['x', 'z', 'y'],
       },
       scale: 1,
     })

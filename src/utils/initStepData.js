@@ -1,6 +1,9 @@
 import toNumber from './toNumber'
 import { transitionDuration } from './index'
 
+/* 默认旋转顺序 */
+export const defaultRotateOrder = ['x', 'y', 'z']
+
 /* when receive steps from vue props
  * init the steps data for computing
  * transform empty number to default
@@ -16,7 +19,7 @@ const initStepData = data => ({
     x: toNumber(data.rotateX),
     y: toNumber(data.rotateY),
     z: toNumber(data.rotateZ || data.rotate),
-    order: data.rotateOrder,
+    order: data.rotateOrder || defaultRotateOrder,
   },
   scale: toNumber(data.scale, 1),
   transitionDuration: data.transitionDuration ? transitionDuration(data.transitionDuration) : null,

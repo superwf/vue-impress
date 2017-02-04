@@ -60,7 +60,7 @@ export default {
       }
       this.canvasStyle = {
         transitionDuration: duration,
-        transform: rotate(target.rotate, ['z', 'y', 'x']) + translate(target.translate),
+        transform: rotate(target.rotate) + translate(target.translate),
       }
       /* when switch steps too quickly,
        * only after the duration time between steps, trigger `impress:stepenter` event

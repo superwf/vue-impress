@@ -16,9 +16,13 @@ describe('test utils', () => {
       x: 100,
       y: 200,
       z: 300,
+      order: ['x', 'y', 'z'],
     }
     expect(rotate(t)).toEqual(' rotateX(100deg) rotateY(200deg) rotateZ(300deg)')
-    expect(rotate(t, true)).toEqual(' rotateZ(300deg) rotateY(200deg) rotateX(100deg)')
+    t.order = ['y', 'x', 'z']
+    expect(rotate(t)).toEqual(' rotateY(200deg) rotateX(100deg) rotateZ(300deg)')
+    t.order = ['z', 'y', 'x']
+    expect(rotate(t)).toEqual(' rotateZ(300deg) rotateY(200deg) rotateX(100deg)')
   })
 
   it('scale', () => {

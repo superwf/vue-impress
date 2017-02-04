@@ -84,5 +84,6 @@ module.exports = function karmaConfig(config) {
         { type: 'text-summary' },
       ],
     },
+    singleRun: true,
   })
 }

@@ -35,7 +35,7 @@ for (let i = 0; i < size; i += 1) {
     y: 0,
     z: Math.sin(degree) * radius,
     rotateY: 90 - (degreeStep * i),
-    content: 'x'
+    content: 'center'
   })
 }
 
@@ -52,10 +52,25 @@ for (let i = 0; i < size; i += 1) {
     rotateY: 90 - (degreeStep * i),
     rotateX: 30,
     rotateOrder,
-    content: 'up'
+    content: 'up30'
   })
 }
 
+/* 下30度 */
+for (let i = 0; i < size; i += 1) {
+  const degree = (degreeStep * i * Math.PI) / 180
+  steps.push({
+    x: Math.cos(degree) * xRadius30,
+    y: yUp30,
+    z: Math.sin(degree) * xRadius30,
+    rotateY: 90 - (degreeStep * i),
+    rotateX: -30,
+    rotateOrder,
+    content: 'down30'
+  })
+}
+
+/* 上60度 */
 const yUp60 = Math.sin((60 * Math.PI) / 180) * radius
 const xRadius60 = Math.cos((60 * Math.PI) / 180) * radius
 for (let i = 0; i < size; i += 1) {
@@ -70,6 +85,29 @@ for (let i = 0; i < size; i += 1) {
     content: 'up'
   })
 }
+
+/* 下60度 */
+for (let i = 0; i < size; i += 1) {
+  const degree = (degreeStep * i * Math.PI) / 180
+  steps.push({
+    x: Math.cos(degree) * xRadius60,
+    y: yUp60,
+    z: Math.sin(degree) * xRadius60,
+    rotateY: 90 - (degreeStep * i),
+    rotateX: -60,
+    rotateOrder,
+    content: 'down60'
+  })
+}
+
+/* bottom */
+steps.push({
+  x: 0,
+  y: radius,
+  z: 0,
+  rotateX: -90,
+  content: 'bottom'
+})
 
 steps.unshift({
   x: 0,
@@ -115,9 +153,7 @@ export default {
   }
   .impress-step {
     text-align: center;
-    width: 50px;
     cursor: pointer;
-    border: solid 1px;
   }
   .impress-step.active {
     cursor: auto;
