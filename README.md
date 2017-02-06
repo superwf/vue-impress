@@ -6,6 +6,8 @@ Inspired by [impress.js](https://github.com/impress/impress.js), thanks for it s
 
 At the end of impress.js, the words *use the source, Luke!* really encouraged me! Thanks *star wars* too. I read the source with the power and made this vue component.
 
+## [demo](http://superwf.github.io/vue-impress-demo.html)
+
 ## install
 
 ```
