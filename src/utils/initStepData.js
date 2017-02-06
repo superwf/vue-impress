@@ -23,6 +23,7 @@ const initStepData = data => ({
   },
   scale: toNumber(data.scale, 1),
   transitionDuration: data.transitionDuration ? transitionDuration(data.transitionDuration) : null,
+  transitionTimingFunction: data.transitionTimingFunction,
 })
 
 export default initStepData

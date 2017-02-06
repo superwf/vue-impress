@@ -40,12 +40,14 @@ export default {
        * 当离开当前step时即触发，不用等下一个stepenter所以不用setTimeout
        * impress.js就是这么处理的，先这样 */
       if (stepIndex !== this.stepIndex) {
-        this.stepLeave(this.stepIndex)
+        this.$emit('impress:stepleave', this.stepIndex)
       }
       this.stepIndex = stepIndex
       const currentData = this.stepsData[stepIndex]
       const target = reverseData(currentData)
       const duration = currentData.transitionDuration || this.transitionDuration
+      const timingFunction = currentData.transitionTimingFunction ||
+        this.config.transitionTimingFunction || 'ease'
 
       /* default perspective 1000px */
       const perspective = `${(this.config.perspective || 1000) / this.containerScale}px`
@@ -60,6 +62,7 @@ export default {
       }
       this.canvasStyle = {
         transitionDuration: duration,
+        transitionTimingFunction: timingFunction,
         transform: rotate(target.rotate) + translate(target.translate),
       }
       /* when switch steps too quickly,
@@ -67,15 +70,8 @@ export default {
        * 当快速切换step时，超过duration时间之后的step才触发impress:stepenter */
       clearTimeout(this.stepEnterTimeout)
       this.stepEnterTimeout = setTimeout(() => {
-        this.stepEnter()
+        this.$emit('impress:stepenter', this.stepIndex)
       }, transitionDuration(duration, true))
-    },
-
-    stepEnter() {
-      this.$emit('impress:stepenter', this.stepIndex)
-    },
-    stepLeave(index) {
-      this.$emit('impress:stepleave', index)
     },
   },
 
@@ -84,6 +80,8 @@ export default {
     this.stepsData = this.steps.map((data) => {
       const stepData = initStepData(data)
       stepData.content = data.content
+      stepData.props = data.props
+      stepData.component = data.component
       return stepData
     })
     if (this.config.fullscreen !== false) {

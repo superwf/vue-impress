@@ -57,9 +57,12 @@ export default {
          * 全屏的话，第一个实例会占满窗口，就像impress.js的例子一样，他实例也没有意义 */
         fullscreen: true, // default true
       },
-      steps: [{  // steps array required
-        x: -1000,
-        y: -300,
+      steps: [{
+        x: 500,
+        y: 0,
+        /* string content
+        * 可以传入普通文本
+        */
         content: 'Hint: press space, right key to next step, left to prev step',
       }, {
         x: 0,
@@ -68,32 +71,31 @@ export default {
         /* content could be vue component
         * 可以传入vue组件
         */
-        content: CustomCom,
+        component: CustomCom,
+        /* props is optional
+        * props按需传，没有可不写
+        */
+        props: {
+          myname: 'abc',
+        },
         transitionDuration: 1000,
       }, {
         x: 1500,
         y: -300,
         z: 200,
+        rotateX: 90,
         scale: 3,
-        /* content could be vue instance
-        * 可以传入vue实例
-        */
-        content: new Vue({
-          propsData: {
-            myname: 'abc',
-          },
-          ...CustomCom,
-        }),
+        content: 'X axis rotate',
       }, {
         x: 0,
         y: 0,
-        rotate: 45,
+        rotate: 3600,
         content: 'rotate step',
       }, {
         x: 0,
-        y: 0,
+        y: 1000,
         z: 900,
-        scale: 10,
+        scale: 5,
         content: 'overview',
       }],
     }
@@ -144,6 +146,7 @@ export default {
 | width | Number | required, use for compute scale ratio |
 | height | Number | required, use for compute scale ratio|
 | transitionDuration | Number | default 1000, unit ms, duration time between step animation |
+| transitionTimingFunction | String | default 'ease', css3 transition-timing-function used when change step |
 | perspective | Number | default 1000, the distance to generate 3d stype |
 | fullscreen | Boolean | default true |
 
@@ -165,6 +168,10 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 | rotateOrder | [String] | default ['x', 'y', 'z'] the rotate order, it matters when rotate more than one direction |
 | scale | Number | default 1 |
 | transitionDuration | Number | unit ms, if has this in step, it will overwrite `transitionDuration` in config prop, just for this step |
+| transitionTimingFunction | String | default use the property in config, you can define it in each step |
+| content | String | string content to show |
+| component | Object | your custom component, when component exists, content is needless |
+| props | Object | the props your component will use |
 
 ### Events
 

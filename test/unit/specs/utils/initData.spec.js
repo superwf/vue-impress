@@ -9,6 +9,7 @@ describe('test utils', () => {
       y: 20,
       rotateX: 30,
       rotateY: 40,
+      transitionTimingFunction: 'linear',
     }
     const stepData = initStepData(data)
     expect(stepData.translate).toEqual({
@@ -21,10 +22,11 @@ describe('test utils', () => {
       x: data.rotateX,
       y: data.rotateY,
       z: 0,
-      order: defaultRotateOrder
+      order: defaultRotateOrder,
     })
     expect(stepData.scale).toBe(1)
     expect(stepData.transitionDuration).toBe(null)
+    expect(stepData.transitionTimingFunction).toBe('linear')
 
     const order = Object.assign([], defaultRotateOrder)
     expect(reverseData(stepData)).toEqual({

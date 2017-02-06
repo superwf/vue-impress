@@ -3235,12 +3235,6 @@ karma-phantomjs-launcher@^1.0.2:
     lodash "^4.0.1"
     phantomjs-prebuilt "^2.1.7"
 
-karma-sinon-chai@^1.2.4:
-  version "1.2.4"
-  resolved "http://registry.npm.taobao.org/karma-sinon-chai/download/karma-sinon-chai-1.2.4.tgz#fea935f62be3366cf0271c8d8be51c0c70e40abc"
-  dependencies:
-    lolex "^1.5.0"
-
 karma-sourcemap-loader@^0.3.7:
   version "0.3.7"
   resolved "http://registry.npm.taobao.org/karma-sourcemap-loader/download/karma-sourcemap-loader-0.3.7.tgz#91322c77f8f13d46fed062b042e1009d4c4505d8"
@@ -3455,7 +3449,7 @@ log4js@^0.6.31:
     readable-stream "~1.0.2"
     semver "~4.3.3"
 
-lolex@^1.5.0:
+lolex@^1.5.2:
   version "1.5.2"
   resolved "http://registry.npm.taobao.org/lolex/download/lolex-1.5.2.tgz#94a4ce41c61185a05e98b8660dc509423ac1c416"
 

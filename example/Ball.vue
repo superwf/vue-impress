@@ -103,6 +103,13 @@ for (let i = 0; i < size; i += 1) {
 /* bottom */
 steps.push({
   x: 0,
+  y: -radius,
+  z: 0,
+  rotateX: 90,
+  content: 'top'
+})
+steps.push({
+  x: 0,
   y: radius,
   z: 0,
   rotateX: -90,

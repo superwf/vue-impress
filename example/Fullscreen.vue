@@ -48,7 +48,7 @@ export default {
       steps: [{
         x: 500,
         y: 0,
-        /* text content
+        /* string content
         * 可以传入普通文本
         */
         content: 'Hint: press space, right key to next step, left to prev step',
@@ -59,28 +59,20 @@ export default {
         /* content could be vue component
         * 可以传入vue组件
         */
-        content: CustomCom,
-        transitionDuration: 1000,
-      }, {
-        x: 1500,
-        y: -300,
-        z: 200,
-        rotate: 90,
-        scale: 3,
-        /* content could be vue instance
-        * 可以传入vue实例
+        component: CustomCom,
+        /* props is optional
+        * props按需传，没有可不写
         */
-        content: new Vue({
-          propsData: {
-            myname: 'abc',
-          },
-          ...CustomCom,
-        }),
+        props: {
+          myname: 'abc',
+        },
+        transitionDuration: 1000,
+        // transitionTimingFunction: 'linear', // default 'ease-in-out'
       }, {
-        x: 1500,
-        y: -300,
+        x: 1000,
+        y: -200,
         z: 200,
-        rotateX: 90,
+        rotateX: 80,
         scale: 3,
         content: 'X axis rotate',
       }, {

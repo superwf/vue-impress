@@ -1,5 +1,6 @@
 import expect, { spyOn, createSpy } from 'expect'
 import Vue from 'vue'
+import lolex from 'lolex'
 import VueImpress from '../../../../src/index'
 import Fullscreen from '../../../../example/Fullscreen.vue'
 import { pfx, scale, rotate, translate, transitionDuration } from '../../../../src/utils'
@@ -82,6 +83,7 @@ describe('vue-impress fullscreen mode', () => {
   })
 
   it('test events impress:stepenter, impress:stepleave', (done) => {
+    const clock = lolex.install()
     const viewport = instance.$refs.impress
     const stepEnterSpy = createSpy()
     const stepLeaveSpy = createSpy()
@@ -93,8 +95,10 @@ describe('vue-impress fullscreen mode', () => {
     expect(stepLeaveSpy).toHaveBeenCalledWith(0)
     setTimeout(() => {
       expect(stepEnterSpy).toHaveBeenCalledWith(2)
+      clock.uninstall()
       done()
     }, instance.config.transitionDuration)
+    clock.tick(instance.config.transitionDuration)
   })
 
   it('click step to goto that step', () => {
@@ -161,7 +165,7 @@ describe('vue-impress none fullscreen mode', () => {
   })
 
 
-  it('first step( steps[0] ) is default active', (done) => {
+  it('viewport will scale by the container size', (done) => {
     const viewport = instance.$refs.impress
     Vue.nextTick(() => {
       expect(typeof viewport.resize).toBe('undefined')
