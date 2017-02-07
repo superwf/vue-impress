@@ -132,6 +132,21 @@ describe('vue-impress fullscreen mode', () => {
     viewport.prevStep()
     expect(viewport.stepIndex).toBe(viewport.stepsData.length - 2)
   })
+
+  it('when step active, wrapper should has this step id in classList', (done) => {
+    const viewport = instance.$refs.impress
+    expect(viewport.stepClass).toBe('firstStep')
+    const viewportDom = document.querySelector('.impress-viewport')
+    console.log(viewport.$data);
+    Vue.nextTick(() => {
+      expect(viewportDom.classList.contains(viewport.stepClass)).toBe(true)
+      viewport.gotoStep(viewport.$data.stepsData.length - 1)
+      Vue.nextTick(() => {
+        expect(viewportDom.classList.contains('overview')).toBe(true)
+        done()
+      })
+    })
+  })
 })
 
 describe('vue-impress none fullscreen mode', () => {

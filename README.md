@@ -66,6 +66,7 @@ export default {
         * 可以传入普通文本
         */
         content: 'Hint: press space, right key to next step, left to prev step',
+        id: 'firstStep'
       }, {
         x: 0,
         y: -300,
@@ -81,24 +82,28 @@ export default {
           myname: 'abc',
         },
         transitionDuration: 1000,
+        // transitionTimingFunction: 'linear', // default 'ease'
       }, {
-        x: 1500,
-        y: -300,
+        x: 1000,
+        y: -200,
         z: 200,
-        rotateX: 90,
+        rotateX: 80,
         scale: 3,
         content: 'X axis rotate',
+        id: 'xRotateStep',
       }, {
         x: 0,
         y: 0,
-        rotate: 3600,
-        content: 'rotate step',
+        rotate: 720,
+        content: 'z rotate step',
+        id: 'zRotateStep',
       }, {
         x: 0,
         y: 1000,
         z: 900,
         scale: 5,
         content: 'overview',
+        id: 'overview',
       }],
     }
   },
@@ -124,6 +129,9 @@ export default {
     border: solid 1px;
     text-align: center;
     cursor: pointer;
+  }
+  .impress-viewport.overview .impress-step:not(.active) {
+    opacity: 0;
   }
   .impress-step.active {
     cursor: auto;
@@ -174,6 +182,7 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 | content | String | string content to show |
 | component | Object | your custom component, when component exists, content is needless |
 | props | Object | the props your component will use |
+| id | String | optional, step identity, when step is active, the outer wrapper will add this id to classList. if not provided, `step-${stepIndex}` will be used. it is useful when some step is active and need a special css. For example .impress-viewport.step-0, or .impress-viewport.overview |
 
 ### Events
 

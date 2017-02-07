@@ -1,4 +1,4 @@
-.impress-viewport(ref="root", ":style"="initialRootStyle")
+.impress-viewport(ref="root", ":style"="initialRootStyle", :class="stepClass")
   div(v-if="!impressSupported") your browser does not support this component
   .impress-canvas(:style="canvasStyle" v-else="true")
     step(v-for="(step, i) in stepsData", :step="step", :index="i", :active="stepIndex === i")

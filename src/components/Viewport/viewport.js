@@ -44,6 +44,7 @@ export default {
       }
       this.stepIndex = stepIndex
       const currentData = this.stepsData[stepIndex]
+      this.stepClass = currentData.id
       const target = reverseData(currentData)
       const duration = currentData.transitionDuration || this.transitionDuration
       const timingFunction = currentData.transitionTimingFunction ||
@@ -77,10 +78,11 @@ export default {
 
   beforeMount() {
     this.impressSupported = impressSupported
-    this.stepsData = this.steps.map((data) => {
+    this.stepsData = this.steps.map((data, i) => {
       const stepData = initStepData(data)
       stepData.content = data.content
       stepData.props = data.props
+      stepData.id = data.id || `step-${i}`
       stepData.component = data.component
       return stepData
     })
@@ -136,6 +138,7 @@ export default {
        * 给每个step enter之后的timeout用 */
       stepEnterTimeout: null,
       containerScale: null,
+      stepClass: '',
     }
   },
 }
