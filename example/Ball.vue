@@ -1,6 +1,7 @@
 <template lang="pug">
   .app(tabindex="1", ref="app", @keyup.right.space="impressNextStep", @keyup.left="impressPrevStep")
     impress-viewport(ref="impress", :steps="steps", :config="config")
+      .planet-ring
 </template>
 
 <script>
@@ -118,8 +119,9 @@ steps.push({
 
 steps.unshift({
   x: 0,
+  id: 'overview',
   content: '',
-  scale: 2,
+  scale: 3,
   rotateX: 30,
 })
 
@@ -170,5 +172,18 @@ export default {
   }
   .impress-step:nth-of-type(odd) {
     color: blue;
+  }
+  .impress-viewport .planet-ring {
+    width: 2000px;
+    height: 2000px;
+    position: absolute;
+    border: 70px solid;
+    border-radius: 50%;
+    transform: rotateX(-90deg);
+    transition: opacity 3s;
+    opacity: .1;
+  }
+  .impress-viewport.overview .planet-ring {
+    opacity: .5;
   }
 </style>

@@ -142,6 +142,14 @@ export default {
 
 ## API
 
+### vue component
+
+only one component `impress-viewport`
+
+normally impress-viewport has no child
+but it can contain other component
+Check the [ball example](https://github.com/superwf/vue-impress/blob/master/example/Ball.vue)
+
 ### Props
 
 | name | type |
@@ -155,10 +163,10 @@ export default {
 | --- | ---- | ---- |
 | width | Number | required, use for compute scale ratio |
 | height | Number | required, use for compute scale ratio|
-| transitionDuration | Number | default 1000, unit ms, duration time between step animation |
-| transitionTimingFunction | String | default 'ease', css3 transition-timing-function used when change step |
-| perspective | Number | default 1000, the distance to generate 3d stype |
-| fullscreen | Boolean | default true |
+| transitionDuration | Number | optional, default 1000, unit ms, duration time between step animation |
+| transitionTimingFunction | String | optional, default 'ease', css3 transition-timing-function used when change step |
+| perspective | Number | optional, default 1000, the distance to generate 3d style |
+| fullscreen | Boolean | optional, default true |
 
 When `fullscreen` is true, it means that there should be only one instance in current page. vue-impress will use config width and height and window innerWidth, innerHeight to compute scale.
 When `fullscreen` is false, the vue-impress parent element should has has a absolute or relative position, and has a explicit width and height
@@ -168,20 +176,20 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 
 | key | type | description |
 | --- | ---- | ---- |
-| x | Number | default 0, translate x position |
-| y | Number | default 0, translate y position |
-| z | Number | default 0, translate z position |
-| rotateX | Number | default 0, rotate deg by x axis |
-| rotateY | Number | default 0, rotate deg by y axis |
-| rotateZ | Number | default 0, rotate deg by z axis |
-| rotate | Number | default 0, the same as rotateZ |
-| rotateOrder | [String] | default ['x', 'y', 'z'] the rotate order, it matters when rotate more than one direction |
+| x | Number | optional, default 0, translate x position |
+| y | Number | optional, default 0, translate y position |
+| z | Number | optional, default 0, translate z position |
+| rotateX | Number | optional, default 0, rotate deg by x axis |
+| rotateY | Number | optional, default 0, rotate deg by y axis |
+| rotateZ | Number | optional, default 0, rotate deg by z axis |
+| rotate | Number | optional, default 0, the same as rotateZ |
+| rotateOrder | [String] | optional, default ['x', 'y', 'z'] the rotate order, it matters when rotate more than one direction |
 | scale | Number | default 1 |
-| transitionDuration | Number | unit ms, if has this in step, it will overwrite `transitionDuration` in config prop, just for this step |
-| transitionTimingFunction | String | default use the property in config, you can define it in each step |
-| content | String | string content to show |
-| component | Object | your custom component, when component exists, content is needless |
-| props | Object | the props your component will use |
+| transitionDuration | Number | optional, unit ms, if this exists in step, it will overwrite `transitionDuration` in config prop, just for this step |
+| transitionTimingFunction | String |  optional, default use the property in config, you can define it in each step |
+| content | String | optional, string content to show |
+| component | Object | optional, your custom component, when component exists, content is needless |
+| props | Object | optional, the props your component will use |
 | id | String | optional, step identity, when step is active, the outer wrapper will add this id to classList. if not provided, `step-${stepIndex}` will be used. it is useful when some step is active and need a special css. For example .impress-viewport.step-0, or .impress-viewport.overview |
 
 ### Events
@@ -199,7 +207,7 @@ When `fullscreen` is false, the vue-impress parent element should has has a abso
 | nextStep | | goto next step, same as gotoStep( index + 1 ), goto first step when current is last step |
 | prevStep | | goto prev step, same as gotoStep( index - 1 ), goto last step when current is first step |
 
-## element class
+## element class, used for css style
 
 | name | description |
 | --- | --- |
