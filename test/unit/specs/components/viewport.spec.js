@@ -193,3 +193,47 @@ describe('vue-impress none fullscreen mode', () => {
     })
   })
 })
+
+describe('vue-impress slot insert element', () => {
+  Vue.use(VueImpress)
+
+  let div
+  let instance
+
+  beforeEach(() => {
+    div = document.createElement('div')
+    const inner = document.createElement('div')
+    div.appendChild(inner)
+    document.body.appendChild(div)
+    instance = new Vue({
+      template: '<impress-viewport ref="impress" :steps="steps" :config="config"><a class="a-element"></a></impress-viewport>',
+      data() {
+        return {
+          config: {
+            width: 100,
+            height: 100
+          },
+          steps: [{
+            x: 0,
+            content: 'a',
+          }]
+        }
+      }
+    }).$mount(inner)
+  })
+
+  afterEach(() => {
+    instance.$destroy()
+    document.body.removeChild(div)
+  })
+
+
+  it('viewport insert element', (done) => {
+    Vue.nextTick(() => {
+      const viewport = document.querySelector('.impress-viewport')
+      const a = viewport.querySelector('a')
+      expect(a.classList.contains('a-element')).toBe(true)
+      done()
+    })
+  })
+})
