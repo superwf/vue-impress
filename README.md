@@ -8,6 +8,10 @@ At the end of impress.js, the words *use the source, Luke!* really encouraged me
 
 ## [demo](http://superwf.github.io/vue-impress-demo.html)
 
+## Compatibility
+
+Compatible with vue 2.x
+
 ## install
 
 ```
